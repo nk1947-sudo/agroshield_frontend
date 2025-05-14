@@ -1,0 +1,15 @@
+# This file defines who should review and approve changes to different parts of the codebase
+# See https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default owners for everything
+* @your-username
+
+# Specific owners for directories
+/src/modules/ @your-username
+/src/services/ @your-username
+/src/context/ @your-username
+
+# Configuration files
+*.config.js @your-username
+*.config.ts @your-username
+package.json @your-username
