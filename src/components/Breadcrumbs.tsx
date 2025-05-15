@@ -1,37 +1,66 @@
+// Breadcrumbs.tsx
 import React from 'react';
-import { useLocation, Link } from 'react-router-dom';
+import { ChevronRight, Home } from 'lucide-react';
+import { useAppContext } from '../context/AppContext';
 
-const routeNameMap: Record<string, string> = {
-  dashboard: 'Dashboard',
-  'inspection-planning': 'Inspection Planning',
-  'field-execution': 'Field Execution',
-  'seizure-logging': 'Seizure Logging',
-  'legal': 'Legal Module',
-  'lab-interface': 'Lab Interface',
-  'reports': 'Reports & Audit',
-};
+interface BreadcrumbItem {
+  label: string;
+  href?: string;
+  icon?: React.ReactNode;
+}
 
-const Breadcrumbs = () => {
-  const location = useLocation();
-  const pathnames = location.pathname.split('/').filter(Boolean);
+interface BreadcrumbsProps {
+  items: BreadcrumbItem[];
+}
 
+const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items }) => {
+  const { darkMode } = useAppContext();
+  
   return (
-    <nav aria-label="Breadcrumb" className="mb-4">
-      <ol className="flex space-x-2 text-sm text-gray-500">
-        <li>
-          <Link to="/dashboard" className="hover:underline">Home</Link>
+    <nav className="mb-4" aria-label="Breadcrumb">
+      <ol className="flex items-center space-x-1 text-sm">
+        <li className="flex items-center">
+          <a 
+            href="#"
+            className={`flex items-center ${
+              darkMode ? 'text-gray-400 hover:text-white' : 'text-gray-500 hover:text-gray-700'
+            }`}
+            aria-label="Home"
+          >
+            <Home size={16} />
+          </a>
         </li>
-        {pathnames.map((value, idx) => {
-          const to = `/${pathnames.slice(0, idx + 1).join('/')}`;
-          return (
-            <li key={to} className="flex items-center">
-              <span className="mx-2">/</span>
-              <Link to={to} className="hover:underline">
-                {routeNameMap[value] || value}
-              </Link>
-            </li>
-          );
-        })}
+        
+        {items.map((item, index) => (
+          <li key={index} className="flex items-center">
+            <ChevronRight 
+              size={16} 
+              className={darkMode ? 'text-gray-500' : 'text-gray-400'} 
+            />
+            
+            {index === items.length - 1 ? (
+              <span 
+                className={`ml-1 font-medium ${
+                  darkMode ? 'text-gray-200' : 'text-gray-800'
+                }`}
+                aria-current="page"
+              >
+                {item.icon && <span className="mr-1">{item.icon}</span>}
+                {item.label}
+              </span>
+            ) : (
+              <a 
+                href={item.href || '#'}
+                className={`ml-1 ${
+                  darkMode ? 'text-gray-400 hover:text-white' : 'text-gray-500 hover:text-gray-700'
+                }`}
+              >
+                {item.icon && <span className="mr-1">{item.icon}</span>}
+                {item.label}
+              </a>
+            )}
+          </li>
+        ))}
       </ol>
     </nav>
   );

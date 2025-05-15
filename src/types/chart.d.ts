@@ -1,44 +1,67 @@
-declare module 'recharts' {
-  export interface AreaProps {
-    type?: string;
-    dataKey?: string;
-    stackId?: string;
-    stroke?: string;
-    fill?: string;
-  }
+// chart.d.ts
+export interface ChartDataPoint {
+  [key: string]: string | number | Date;
+}
 
-  export interface CartesianGridProps {
-    strokeDasharray?: string;
-    stroke?: string;
-  }
+// Performance Data
+export interface PerformanceData extends ChartDataPoint {
+  month: string;
+  inspections: number;
+  violations: number;
+  seizures: number;
+}
 
-  export interface XAxisProps {
-    dataKey?: string;
-    stroke?: string;
-  }
+// Officer Performance
+export interface OfficerPerformanceData extends ChartDataPoint {
+  name: string;
+  inspections: number;
+  seizures: number;
+  compliance: number;
+}
 
-  export interface YAxisProps {
-    stroke?: string;
-  }
+// Hotspot Data
+export interface HotspotData extends ChartDataPoint {
+  area: string;
+  riskLevel: number;
+  violations: number;
+}
 
-  export interface TooltipProps {
-    contentStyle?: React.CSSProperties;
-  }
+// Time Series Data
+export interface TimeSeriesData extends ChartDataPoint {
+  date: string | Date;
+  value: number;
+  category?: string;
+}
 
-  export const ResponsiveContainer: React.FC<{
-    width?: string | number;
-    height?: string | number;
-    children?: React.ReactNode;
-  }>;
+// Bar Chart Data
+export interface BarChartData extends ChartDataPoint {
+  label: string;
+  value: number;
+  category?: string;
+}
 
-  export const AreaChart: React.FC<{
-    data?: any[];
-    children?: React.ReactNode;
-  }>;
+// Pie Chart Data
+export interface PieChartData {
+  name: string;
+  value: number;
+  color?: string;
+}
 
-  export const Area: React.FC<AreaProps>;
-  export const XAxis: React.FC<XAxisProps>;
-  export const YAxis: React.FC<YAxisProps>;
-  export const CartesianGrid: React.FC<CartesianGridProps>;
-  export const Tooltip: React.FC<TooltipProps>;
+// Multi Series Line Chart Data
+export interface MultiSeriesData {
+  name: string;
+  series: TimeSeriesData[];
+}
+
+// Heatmap Data
+export interface HeatmapData {
+  x: string;
+  y: string;
+  value: number;
+}
+
+// Radar Chart Data
+export interface RadarChartData {
+  category: string;
+  [key: string]: string | number;
 }

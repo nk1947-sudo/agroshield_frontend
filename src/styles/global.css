@@ -1,54 +1,180 @@
-/* global.css */
-
+/* global.css - Verify this contains Tailwind directives */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Reset some default styles */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+:root {
+  --color-primary: #16a34a;
+  --color-primary-dark: #166534;
+  --color-primary-light: #22c55e;
+  --color-accent: #166534;
+  --color-text-dark: #0f172a;
+  --color-text-light: #f8fafc;
+  --color-danger: #ef4444;
+  --color-warning: #f59e0b;
+  --color-info: #3b82f6;
+  --color-success: #10b981;
+  --color-background-light: #f8fafc;
+  --color-background-dark: #0f172a;
+}
+
+/* Base styles */
+html, body {
+  @apply h-full;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+  scrollbar-width: thin;
 }
 
 body {
-  font-family: 'Arial', sans-serif;
-  background-color: #f8f8f8; /* Light background color */
-  color: #333; /* Default text color */
+  @apply antialiased m-0 p-0 font-sans text-base;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  margin-bottom: 10px;
-  color: #333;
+#root {
+  @apply h-full;
 }
 
-p {
-  margin-bottom: 15px;
-  color: #555;
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
-/* Add smooth transitions for UI elements */
-button, a, .card {
-  transition: all 0.3s ease;
-}
-
-/* Scrollbars for custom elements */
+/* Scrollbar styling for webkit */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 4px;
+  @apply bg-gray-300 dark:bg-gray-600 rounded-full;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  @apply bg-gray-400 dark:bg-gray-500;
 }
 
-/* Tailwind CSS classes can be used for layout and styling, but any custom rules for typography, spacing, etc. can go here */
+/* Focus styles */
+*:focus {
+  outline: none;
+}
+
+*:focus-visible {
+  @apply ring-2 ring-green-500 ring-offset-2 outline-none;
+}
+
+.dark *:focus-visible {
+  @apply ring-green-400 ring-offset-gray-800;
+}
+
+/* Utility classes */
+.card {
+  @apply bg-white dark:bg-gray-800 rounded-lg shadow p-6;
+}
+
+.form-input {
+  @apply w-full px-3 py-2 rounded-lg border dark:bg-gray-700 dark:border-gray-600 dark:text-white focus:outline-none focus:ring-2 focus:ring-green-500;
+}
+
+.btn {
+  @apply px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors;
+}
+
+.btn-primary {
+  @apply bg-green-600 text-white hover:bg-green-700 focus:ring-green-500;
+}
+
+.btn-secondary {
+  @apply bg-gray-200 text-gray-800 hover:bg-gray-300 focus:ring-gray-400 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600;
+}
+
+.btn-danger {
+  @apply bg-red-600 text-white hover:bg-red-700 focus:ring-red-500;
+}
+
+.btn-info {
+  @apply bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500;
+}
+
+.btn-warning {
+  @apply bg-yellow-500 text-white hover:bg-yellow-600 focus:ring-yellow-400;
+}
+
+.btn-success {
+  @apply bg-green-600 text-white hover:bg-green-700 focus:ring-green-500;
+}
+
+/* Status pills */
+.status-pill {
+  @apply px-3 py-1 text-xs rounded-full font-medium;
+}
+
+.status-pending {
+  @apply bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-100;
+}
+
+.status-success {
+  @apply bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100;
+}
+
+.status-error {
+  @apply bg-red-100 text-red-800 dark:bg-red-800 dark:text-red-100;
+}
+
+.status-info {
+  @apply bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.animate-slide-in-up {
+  animation: slideInUp 0.3s ease-out;
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Print styles */
+@media print {
+  html, body {
+    @apply bg-white text-black;
+  }
+  
+  .no-print {
+    display: none !important;
+  }
+  
+  .print-only {
+    display: block !important;
+  }
+  
+  .card {
+    @apply border border-gray-300 shadow-none;
+  }
+}
