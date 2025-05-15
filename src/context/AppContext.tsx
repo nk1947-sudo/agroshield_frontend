@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, useMemo, useCallback } from 'react';
-import { Toast } from '../types';
+import type { Toast } from '../types';
 
 // Define user roles
 export const USER_ROLES = {
